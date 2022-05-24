@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/alidns"
-	"github.com/k8scat/rpi-auto-dns/utils"
+	"github.com/k8scat/auto-dns/utils"
 )
 
 const defaultRegion = "cn-hangzhou"

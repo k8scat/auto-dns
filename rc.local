@@ -1,0 +1,34 @@
+#!/bin/bash
+set -e
+
+AUTO_DNS="/usr/bin/auto-dns"
+
+ACCESS_KEY="<Aliyun Access Key>"
+ACCESS_SECRET="<Aliyun Access Secret>"
+
+# <主机记录>.<域名>
+DOMAIN="<域名>"
+RR="<主机记录>"
+
+for i in {1..60}; do
+  IP="$(hostname -I | awk '{print $1}')" # 多个网络
+  if [[ -n "${IP}" ]]; then
+    break
+  fi
+  sleep 1
+done
+
+if [[ ! -f "${AUTO_DNS}" ]]; then
+  curl -L https://github.com/k8scat/auto-dns/releases/download/latest/auto-dns-linux-arm64 -o "${AUTO_DNS}"
+fi
+
+if [[ ! -x "${AUTO_DNS}" ]]; then
+  chmod a+x "${AUTO_DNS}"
+fi
+
+"${AUTO_DNS}" \
+    -access-key "${ACCESS_KEY}" \
+    -access-secret "${ACCESS_SECRET}" \
+    -domain "${DOMAIN}" \
+    -rr "${RR}" \
+    -ip "${IP}" >/var/log/auto-dns.log 2>&1

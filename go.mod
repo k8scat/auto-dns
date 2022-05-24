@@ -1,4 +1,4 @@
-module github.com/k8scat/rpi-auto-dns
+module github.com/k8scat/auto-dns
 
 go 1.16
 
